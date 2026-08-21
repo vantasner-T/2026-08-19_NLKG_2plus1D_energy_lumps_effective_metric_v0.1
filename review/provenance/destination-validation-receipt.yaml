@@ -1,0 +1,55 @@
+schema_version: 1
+receipt:
+  recorded_at: '2026-08-21T09:00:28+02:00'
+  destination_repository: vantasner-T/2026-08-19_NLKG_2plus1D_energy_lumps_effective_metric_v0.1
+  destination_base_commit: 87ccf681a5e6e1b732083dfa15e0dc678dc22c80
+  destination_issue: https://github.com/vantasner-T/2026-08-19_NLKG_2plus1D_energy_lumps_effective_metric_v0.1/issues/1
+  branch: review/p238-companion-corpus
+  upstream_repository: vantasnerdan/substrate-framework
+  upstream_review_pr: https://github.com/vantasnerdan/substrate-framework/pull/145
+  upstream_merge_commit: 6e5a4ba001bfdb41ea6e5157a43b0a854d118e1a
+  independently_approved_upstream_head: 1bfe5388ba253387267f425093b00c4c4009224c
+  paper_sha256: 7cd35b8c397e874b581ce6da83c05b7047c256439d615d2f05cbbfb33536dd36
+  frozen_content:
+    rule: >-
+      SHA-256 over the sorted sha256sum records for all 25 intended repository
+      files before this receipt was added; ignored virtual environments, Lake
+      caches, and generated manifests are excluded.
+    digest: 11a90cbf86614f63dbc8c004de74ae91c15188d823be5316c196707f5403466f
+  organization:
+    readme: paper summary, neutral claim list, file map, and reproduction commands
+    review: peer review, repair guide, literature audit, and machine-readable claims
+    corpus: portable SymPy, SciPy, and Lean audit and replacement sources
+    provenance: source identity, upstream lineage, solution-reuse map, and receipts
+  portability_changes:
+    - reorganized the upstream companion and evidence files under review/
+    - changed local documentation and evidence paths to the destination layout
+    - adapted review/verify.py to use the standalone corpus Lake project
+    - added PyYAML to the pinned Python requirements used by review/verify.py
+  unchanged_scientific_sources:
+    - review/corpus/P238PaperChecks.lean
+    - review/corpus/P238ReplacementProofs.lean
+    - review/corpus/scipy_checks.py
+    - review/corpus/scipy_replacements.py
+    - review/corpus/sympy_checks.py
+    - review/corpus/sympy_replacements.py
+  validation:
+    setup:
+      - python3 -m venv .venv
+      - .venv/bin/python -m pip install -r review/corpus/requirements.txt
+      - cd review/corpus && lake update
+    command: .venv/bin/python review/verify.py
+    exit_status: 0
+    result: >-
+      Inventory and review closure checks pass; SymPy audit 29/29, SciPy audit
+      12/12, Lean audit 11/11, SymPy replacements 12/12, SciPy claim solutions
+      2/2, and Lean replacement theorems 9/9.
+    lean_stderr: empty for both formal files
+    destination_evidence_paths: all paths in review/claims/results.yaml and the solution-reuse destinations resolve
+    hygiene: git diff --cached --check passes
+  impact:
+    existing_files_changed: []
+    existing_pdf_changed: false
+    existing_license_changed: false
+    framework_claim_promotion: none
+    destination_gitnexus: not configured in the two-file destination repository
